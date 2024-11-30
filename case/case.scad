@@ -1,7 +1,8 @@
 include <array_ops.scad>
 include <profiles.scad>
 
-$fn=50;
+$fn = 50;
+outer_scale_margin = 0.03;
 
 module board_with_thickenss(points) {
     linear_extrude(height = 2)
@@ -80,7 +81,6 @@ module case_holes() {
 module case(board_points, case_points) {
     case_height = 10;
     keyboard_hole_scale_margin = 0.01;
-    outer_scale_margin = 0.03;
     bottom_thickenss = 1;
     difference() {
         keyboard_body(
@@ -117,31 +117,3 @@ top_points, bottom_points, outer_scale, board_scale, case_center, board_center
         linear_extrude(height)
             polygon(wrist_support_points_outer);
 };
-
-module left_side()
-{
-    translate([0, 0, 25])
-        rotate([10, 10, 0])
-            {
-                color([0, 1, 1, 0.8])
-                    case(
-                    board_points = board_profile_points,
-                    case_points = case_profile_points
-                    );
-
-                color([0.3, 0.3, 0.3, 1])
-                    wrist_support(
-                    top_points = reverse(wrist_support_top_points),
-                    bottom_points = wrist_support_bottom_points,
-                    outer_scale = 1.03,
-                    board_scale = 1.01,
-                    case_center = get_center_point(case_profile_points),
-                    board_center = get_center_point(board_profile_points)
-                    );
-            };
-};
-
-left_side();
-translate([-320, 0, 0])
-    mirror([1, 0, 0])
-        left_side();
