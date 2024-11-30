@@ -110,3 +110,7 @@ case_profile_points = concat(
 board_top_points,
 wrist_support_bottom_points
 );
+
+color([1, 1, 1, 1.0])
+    translate([0, 150, 0])
+        polygon([[0, 0], [0, -300], [-325, -300], [-325, 0]]);

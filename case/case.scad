@@ -1,6 +1,7 @@
 include <array_ops.scad>
 include <profiles.scad>
 
+$fn=50;
 
 module board_with_thickenss(points) {
     linear_extrude(height = 2)
@@ -47,35 +48,32 @@ scale2d(bottom_points, outer_scale, case_center),
 scale2d(top_points, board_scale, board_center)
 );
 
-module case_hole(hole_height, hole_rad, hull_length, rad_points) {
+module case_hole(hole_height, hole_rad, hull_length) {
     linear_extrude(hole_height)
         hull() {
             translate([hull_length, 0, 0])
-                circle(r = hole_rad, $fn = rad_points);
-            circle(r = hole_rad, $fn = rad_points);
+                circle(r = hole_rad);
+            circle(r = hole_rad);
         };
 };
 
 module case_holes() {
     hole_height = 10;
-    hole_rad = 2.5;
-    rad_points = 50;
+    hole_rad = 3;
     hull_length = 8;
     translate([-148, -80, 5])
         rotate([90, 00, 90])
             case_hole(
             hole_height = hole_height,
             hole_rad = hole_rad,
-            hull_length = hull_length,
-            rad_points = rad_points
+            hull_length = hull_length
             );
     translate([-135, -80, 5])
         rotate([90, 00, 0])
             case_hole(
             hole_height = hole_height,
             hole_rad = hole_rad,
-            hull_length = hull_length,
-            rad_points = rad_points
+            hull_length = hull_length
             );
 };
 
@@ -120,17 +118,30 @@ top_points, bottom_points, outer_scale, board_scale, case_center, board_center
             polygon(wrist_support_points_outer);
 };
 
-color([0, 1, 1, 0.8])
-    case(
-    board_points = board_profile_points,
-    case_points = case_profile_points
-    );
+module left_side()
+{
+    translate([0, 0, 25])
+        rotate([10, 10, 0])
+            {
+                color([0, 1, 1, 0.8])
+                    case(
+                    board_points = board_profile_points,
+                    case_points = case_profile_points
+                    );
 
-wrist_support(
-top_points = reverse(wrist_support_top_points),
-bottom_points = wrist_support_bottom_points,
-outer_scale = 1.03,
-board_scale = 1.01,
-case_center = get_center_point(case_profile_points),
-board_center = get_center_point(board_profile_points)
-);
+                color([0.3, 0.3, 0.3, 1])
+                    wrist_support(
+                    top_points = reverse(wrist_support_top_points),
+                    bottom_points = wrist_support_bottom_points,
+                    outer_scale = 1.03,
+                    board_scale = 1.01,
+                    case_center = get_center_point(case_profile_points),
+                    board_center = get_center_point(board_profile_points)
+                    );
+            };
+};
+
+left_side();
+translate([-320, 0, 0])
+    mirror([1, 0, 0])
+        left_side();
