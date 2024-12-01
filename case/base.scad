@@ -3,7 +3,7 @@ include <profiles.scad>
 
 module base_volume(profile_points, outer_scale_margin, rotation, translation) {
     center_point = get_center_point(profile_points);
-    linear_extrude(height = 60)
+    linear_extrude(height = 120)
         projection(cut = false)
             translate(translation)
                 rotate(rotation)

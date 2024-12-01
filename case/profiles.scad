@@ -98,13 +98,31 @@ n_corner_points
 )
 );
 
-wrist_support_bottom_points = concat(
+wrist_support_bottom_points_old = concat(
 bezier_points(
     [
         [-120.242566, 22.844102], [-90, 100], [0, 150], [1.548595, -1.550011]
     ], n_corner_points * 5
 )
 );
+
+wrist_support_bottom_points = concat(
+bezier_points(
+    [
+        [-120.242566, 22.844102],
+        [-70, 100],
+        [-120, 100],
+        [-30, 100]
+    ], n_corner_points * 5),
+bezier_points(
+    [
+        [-30, 100],
+        [0, 100],
+        [0, 100],
+        [1.548595, -1.550011]
+    ], n_corner_points * 5)
+);
+
 
 case_profile_points = concat(
 board_top_points,
