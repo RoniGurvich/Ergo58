@@ -13,7 +13,7 @@ module keyboard_space(
 profile_points,
 bottom_thickenss,
 case_height,
-scale_margin, ,
+scale_margin,
 eps = 0.01
 ) {
     center_point = get_center_point(profile_points);
@@ -50,18 +50,18 @@ module case_hole(hole_height, hole_rad, hull_length) {
         };
 };
 
-module case_holes() {
+module case_holes(rad_extra = 0) {
     hole_height = 10;
-    hole_rad = 3;
-    hull_length = 8;
-    translate([-148, -80, 5])
+    hole_rad = 8 + rad_extra;
+    hull_length = 18;
+    translate([-148, -90, 10])
         rotate([90, 00, 90])
             case_hole(
             hole_height = hole_height,
             hole_rad = hole_rad,
             hull_length = hull_length * 2
             );
-    translate([-135, -80, 5])
+    translate([-145, -80, 10])
         rotate([90, 00, 0])
             case_hole(
             hole_height = hole_height,
@@ -74,6 +74,7 @@ module case(board_points, case_points) {
     case_height = 10;
     keyboard_hole_scale_margin = 0.01;
     bottom_thickenss = 1;
+    * case_holes();
     difference() {
         keyboard_body(
         profile_points = case_points,

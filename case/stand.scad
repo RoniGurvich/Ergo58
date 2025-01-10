@@ -1,4 +1,3 @@
-include <case.scad>
 include <profiles.scad>
 
 module base_volume(profile_points, outer_scale_margin, rotation, translation) {
@@ -33,7 +32,7 @@ module keyboard_base(profile_points, outer_scale_margin, rotation, translation) 
 
         translate(translation)
             rotate(rotation)
-                translate([-500, -500, 3])
+                translate([-500, -500, 5])
                     cube([1000, 1000, 1000]);
 
         translate(translation)
@@ -42,6 +41,6 @@ module keyboard_base(profile_points, outer_scale_margin, rotation, translation) 
 
         translate(translation)
             rotate(rotation)
-                case_holes();
+                case_holes(rad_extra = 0.1);
     };
 };
