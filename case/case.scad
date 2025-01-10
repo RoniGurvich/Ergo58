@@ -9,14 +9,6 @@ module board_with_thickenss(points) {
         polygon(points);
 };
 
-function sum(v) = [for (p = v) 1] * v;
-
-function get_center_point(points) =
-    [
-        sum([for (p = points) p[0]]) / len(points),
-        sum([for (p = points) p[1]]) / len(points),
-    ];
-
 module keyboard_space(
 profile_points,
 bottom_thickenss,
@@ -67,7 +59,7 @@ module case_holes() {
             case_hole(
             hole_height = hole_height,
             hole_rad = hole_rad,
-            hull_length = hull_length
+            hull_length = hull_length * 2
             );
     translate([-135, -80, 5])
         rotate([90, 00, 0])

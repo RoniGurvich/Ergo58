@@ -38,7 +38,7 @@ module keyboard_base(profile_points, outer_scale_margin, rotation, translation) 
 
         translate(translation)
             rotate(rotation)
-                keyboard_body(case_profile_points, 100, outer_scale_margin);
+                keyboard_body(profile_points, 100, outer_scale_margin);
 
         translate(translation)
             rotate(rotation)
