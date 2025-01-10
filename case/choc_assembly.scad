@@ -8,7 +8,7 @@ module left_case() {
     color([0, 1, 1, 0.8])
         case(
         board_points = choc_board_profile_points,
-        case_points = choc_case_points
+        case_points = choc_case_profile_points
         );
 
     color([0.3, 0.3, 0.3, 1])
@@ -17,7 +17,7 @@ module left_case() {
         bottom_points = choc_wrist_support_bottom_points,
         outer_scale = 1.03,
         board_scale = 1.01,
-        case_center = get_center_point(choc_case_points),
+        case_center = get_center_point(choc_case_profile_points),
         board_center = get_center_point(choc_board_profile_points)
         );
 };
@@ -35,7 +35,7 @@ mirror([1, 0, 0])
 
 color([0.3, 0.3, 0.3, 0.8])
     keyboard_base(
-    profile_points = choc_case_points,
+    profile_points = choc_case_profile_points,
     outer_scale_margin = outer_scale_margin,
     rotation = rotation,
     translation = translation
@@ -44,7 +44,7 @@ color([0.3, 0.3, 0.3, 0.8])
 color([0.3, 0.3, 0.3, 0.8])
     mirror([1, 0, 0])
         keyboard_base(
-        profile_points = choc_case_points,
+        profile_points = choc_case_profile_points,
         outer_scale_margin = outer_scale_margin,
         rotation = rotation,
         translation = translation

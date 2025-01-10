@@ -8,7 +8,7 @@ choc_board_profile_points = scale2d_multi(
 board_profile_points, choc_scale, [min_x, min_y]
 );
 
-choc_case_points = scale2d_multi(
+choc_case_profile_points = scale2d_multi(
 case_profile_points, choc_scale, [min_x, min_y]
 );
 
