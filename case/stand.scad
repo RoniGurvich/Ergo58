@@ -1,4 +1,5 @@
 include <profiles.scad>
+include <housing.scad>
 
 module base_volume(profile_points, outer_scale_margin, rotation, translation) {
     center_point = get_center_point(profile_points);
@@ -74,7 +75,7 @@ module keyboard_base(profile_points, outer_scale_margin, rotation, translation) 
 
         translate(translation)
             rotate(rotation)
-                keyboard_body(profile_points, 100, outer_scale_margin);
+                flat_keyboard_body(profile_points, 100, outer_scale_margin);
 
         translate(translation)
             rotate(rotation)
