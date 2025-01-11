@@ -12,7 +12,7 @@ module left_case() {
         );
 
     color([0.3, 0.3, 0.3, 1])
-        wrist_support(
+        * wrist_support(
         top_points = reverse(choc_wrist_support_top_points),
         bottom_points = choc_wrist_support_bottom_points,
         outer_scale = 1.03,

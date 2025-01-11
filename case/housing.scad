@@ -25,7 +25,8 @@ eps = 0.01
                         polygon(profile_points);
 };
 
-module keyboard_body(profile_points, case_height, scale_margin) {
+
+module flat_keyboard_body(profile_points, case_height, scale_margin) {
     center_point = get_center_point(profile_points);
     linear_extrude(height = case_height)
         translate([center_point[0], center_point[1], 0])
@@ -33,6 +34,28 @@ module keyboard_body(profile_points, case_height, scale_margin) {
                 translate([-center_point[0], -center_point[1], 0])
                     polygon(profile_points);
 };
+
+module keyboard_body(profile_points, case_height, scale_margin) {
+    min_x = min([for (p = profile_points) p[0]]);
+    max_y = max([for (p = profile_points) p[1]]);
+
+    cylinder_rad = 6;
+
+    difference()
+        {
+            flat_keyboard_body(profile_points, case_height, scale_margin);
+            translate([min_x, max_y - cylinder_rad, -0.1])
+                cube(size = [200, cylinder_rad * 2, cylinder_rad * 2]);
+        };
+
+    intersection() {
+        flat_keyboard_body(profile_points, case_height, scale_margin);
+        translate([min_x, max_y - cylinder_rad, case_height - cylinder_rad])
+            rotate([0, 90, 0])
+                cylinder(200, cylinder_rad, cylinder_rad);
+    }
+};
+
 
 function scale_wrist_support_points(
 top_points, bottom_points, outer_scale, board_scale, case_center, board_center
@@ -88,6 +111,7 @@ module case(board_points, case_points) {
         );
         case_holes();
     };
+
 };
 
 module wrist_support(
