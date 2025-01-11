@@ -13,8 +13,45 @@ module base_volume(profile_points, outer_scale_margin, rotation, translation) {
                                     polygon(profile_points);
 };
 
+module legs(profile_points) {
+    min_x = min([for (p = profile_points) p[0]]);
+    min_y = min([for (p = profile_points) p[1]]);
+    max_x = max([for (p = profile_points) p[0]]);
+    max_y = max([for (p = profile_points) p[1]]);
+
+    width = 15;
+    thickness = 1.5;
+
+    translate([translation[0], translation[1], 0])
+        rotate([0, 0, rotation[2]])
+            translate([min_x, min_y])
+                cube([200, width, thickness]);
+
+    translate([translation[0], translation[1] + width, 0])
+        rotate([0, 0, rotation[2]])
+            translate([min_x, max_y])
+                cube([200, width, thickness]);
+
+    translate([translation[0], translation[1] + width, 0])
+        rotate([0, 0, rotation[2]])
+            translate([min_x, 0.5 * (min_y + max_y)])
+                cube([200, width, thickness]);
+
+
+};
 
 module keyboard_base(profile_points, outer_scale_margin, rotation, translation) {
+
+    intersection() {
+        legs(profile_points = profile_points);
+        base_volume(
+        profile_points = profile_points,
+        outer_scale_margin = outer_scale_margin + 0.02,
+        rotation = rotation,
+        translation = translation
+        );
+    }
+
     difference() {
         base_volume(
         profile_points = profile_points,
