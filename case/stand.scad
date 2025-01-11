@@ -20,24 +20,46 @@ module legs(profile_points) {
     max_x = max([for (p = profile_points) p[0]]);
     max_y = max([for (p = profile_points) p[1]]);
 
-    width = 15;
+    av_x = 0.5 * (min_x + max_x);
+    av_y = 0.5 * (min_y + max_y);
+
     thickness = 1.5;
 
     translate([translation[0], translation[1], 0])
         rotate([0, 0, rotation[2]])
             translate([min_x, min_y])
-                cube([200, width, thickness]);
+                linear_extrude(thickness)
+                    circle(20);
 
-    translate([translation[0], translation[1] + width, 0])
+    translate([translation[0], translation[1], 0])
         rotate([0, 0, rotation[2]])
-            translate([min_x, max_y])
-                cube([200, width, thickness]);
+            translate([max_x, min_y])
+                linear_extrude(thickness)
+                    circle(20);
 
-    translate([translation[0], translation[1] + width, 0])
+    translate([translation[0], translation[1], 0])
         rotate([0, 0, rotation[2]])
-            translate([min_x, 0.5 * (min_y + max_y)])
-                cube([200, width, thickness]);
+            translate([max_x, max_y])
+                linear_extrude(thickness)
+                    circle(20);
 
+    translate([translation[0], translation[1], 0])
+        rotate([0, 0, rotation[2]])
+            translate([min_x + (max_x - min_x) * 5 / 12, max_y])
+                linear_extrude(thickness)
+                    circle(20);
+
+    translate([translation[0], translation[1], 0])
+        rotate([0, 0, rotation[2]])
+            translate([min_x + (max_x - min_x) / 7, av_y])
+                linear_extrude(thickness)
+                    circle(10);
+
+    translate([translation[0], translation[1], 0])
+        rotate([0, 0, rotation[2]])
+            translate([max_x, av_y])
+                linear_extrude(thickness)
+                    circle(10);
 
 };
 
