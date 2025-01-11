@@ -52,7 +52,11 @@ module keyboard_body(profile_points, case_height, scale_margin) {
         flat_keyboard_body(profile_points, case_height, scale_margin);
         translate([min_x, max_y - cylinder_rad, case_height - cylinder_rad])
             rotate([0, 90, 0])
-                cylinder(200, cylinder_rad, cylinder_rad);
+                {
+                    cylinder(200, cylinder_rad, cylinder_rad);
+                    translate([0, -cylinder_rad, 0])
+                        cube([cylinder_rad, cylinder_rad * 2, 200]);
+                }
     }
 };
 
