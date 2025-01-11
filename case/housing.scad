@@ -39,7 +39,7 @@ module keyboard_body(profile_points, case_height, scale_margin) {
     min_x = min([for (p = profile_points) p[0]]);
     max_y = max([for (p = profile_points) p[1]]);
 
-    cylinder_rad = 6;
+    cylinder_rad = 20;
 
     difference()
         {
@@ -50,12 +50,12 @@ module keyboard_body(profile_points, case_height, scale_margin) {
 
     intersection() {
         flat_keyboard_body(profile_points, case_height, scale_margin);
-        translate([min_x, max_y - cylinder_rad, case_height - cylinder_rad])
+        translate([min_x, max_y - cylinder_rad / 2, case_height - cylinder_rad])
             rotate([0, 90, 0])
                 {
-                    cylinder(200, cylinder_rad, cylinder_rad);
-                    translate([0, -cylinder_rad, 0])
-                        cube([cylinder_rad, cylinder_rad * 2, 200]);
+                    cylinder(200, cylinder_rad, cylinder_rad, $fn = 100);
+                    translate([-cylinder_rad, -cylinder_rad, 0])
+                        cube([cylinder_rad, cylinder_rad, 200]);
                 }
     }
 };
