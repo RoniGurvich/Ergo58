@@ -1,5 +1,6 @@
 include <profiles.scad>
 include <housing.scad>
+include <meshes.scad>
 
 module base_volume(profile_points, outer_scale_margin, rotation, translation) {
     center_point = get_center_point(profile_points);
@@ -64,6 +65,7 @@ module legs(profile_points) {
 };
 
 module keyboard_base(profile_points, outer_scale_margin, rotation, translation) {
+    cube_height = 5;
 
     intersection() {
         legs(profile_points = profile_points);
@@ -92,7 +94,7 @@ module keyboard_base(profile_points, outer_scale_margin, rotation, translation) 
 
         translate(translation)
             rotate(rotation)
-                translate([-500, -500, 5])
+                translate([-500, -500, cube_height])
                     cube([1000, 1000, 1000]);
 
         translate(translation)
@@ -102,5 +104,25 @@ module keyboard_base(profile_points, outer_scale_margin, rotation, translation) 
         translate(translation)
             rotate(rotation)
                 case_holes(rad_extra = 0.1);
+
+        //        difference() {
+        //            translate([-90, 0, 0])
+        //                diamond_mesh(
+        //                reps = [20, 26, 4],
+        //                dim = 5,
+        //                scale = 4,
+        //                thickness = 0.1
+        //                );
+        //
+        //            translate(translation)
+        //                rotate(rotation)
+        //                    translate([-500, -500, cube_height - 5])
+        //                        cube([1000, 1000, 1000]);
+        //
+        //            translate([-500, -500, -999])
+        //                cube([1000, 1000, 1000]);
+        //        };
     };
 };
+
+
