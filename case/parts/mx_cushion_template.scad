@@ -2,7 +2,7 @@ include <../housing.scad>
 include <../stand.scad>
 include <../config.scad>
 
-wrist_support(
+wrist_cushion_template(
 top_points = reverse(wrist_support_top_points),
 bottom_points = wrist_support_bottom_points,
 outer_scale = 1.03,

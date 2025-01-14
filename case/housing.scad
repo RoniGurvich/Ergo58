@@ -118,7 +118,7 @@ module case(board_points, case_points) {
 
 };
 
-module wrist_support(
+module wrist_cushion(
 top_points, bottom_points, outer_scale, board_scale, case_center, board_center
 ) {
     height = 1;
@@ -133,7 +133,33 @@ top_points, bottom_points, outer_scale, board_scale, case_center, board_center
     case_center,
     board_center
     );
-    translate([0, 0, board_height])
+    translate([0, 0, board_height - height / 2])
         linear_extrude(height)
-            polygon(wrist_support_points_outer);
+            offset(-2)
+                polygon(wrist_support_points_outer);
+};
+
+module wrist_cushion_template(
+top_points, bottom_points, outer_scale, board_scale, case_center, board_center
+) {
+    height = 1;
+    board_height = 10;
+    inset = 0.99;
+
+    wrist_support_points_outer = scale_wrist_support_points(
+    top_points,
+    bottom_points,
+    outer_scale,
+    board_scale,
+    case_center,
+    board_center
+    );
+    translate([0, 0, board_height - height / 2])
+        linear_extrude(height)
+            difference() {
+                polygon(wrist_support_points_outer);
+                offset(-2)
+                    polygon(wrist_support_points_outer);
+            }
+
 };
