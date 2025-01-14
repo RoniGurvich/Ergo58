@@ -8,7 +8,7 @@ module screen_cover() {
     h_offset = 5.6;
 
     hole_rad = 1.2;
-    hole_offset_w = 2.2 + hole_rad;
+    hole_offset_w = 2.4 + hole_rad;
     hole_offset_h = 1.4 + hole_rad;
 
     mirror([1, 0, 0])
