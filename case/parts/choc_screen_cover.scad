@@ -1,14 +1,14 @@
 module screen_cover() {
     w = 26;
     h = 45;
-    z = 1;
+    z = 1.5;
     inner_h = 28;
     inner_w = 13;
     w_offset = 3.6;
     h_offset = 5.6;
 
     hole_rad = 1.2;
-    hole_offset_w = 2.4 + hole_rad;
+    hole_offset_w = 2 + hole_rad;
     hole_offset_h = 1.4 + hole_rad;
 
     mirror([1, 0, 0])
