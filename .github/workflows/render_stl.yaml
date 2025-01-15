@@ -32,6 +32,18 @@ jobs:
           name: models
           path: generated_models/
 
+      - name: Set up GH_TOKEN
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: echo "GitHub CLI authenticated."
+
+      - name: Create or update GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create latest ./generated_models --title "Latest Models" --notes "Automatically uploaded from CI" || \
+          gh release upload latest ./generated_models --clobber
+
       - name: Remove container
         run: |
           docker rm ergo58-container          
