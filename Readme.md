@@ -44,4 +44,4 @@ A third - optional printable part is the screen cover.
 You can adjust the angles and heights of the case by modifying `rotation` and `translation` variables
 in [src/config.scad](src/config.scad).
 
-You can fork this repo, update the configuration and download the resulting files.
+The easiest way to do it is to fork this repo, update the configuration and download the resulting files.
