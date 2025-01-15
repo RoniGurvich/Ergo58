@@ -18,6 +18,10 @@ Each side of the case includes two printable parts:
 
 A third - optional printable part is the screen cover.
 
+![](doc/img/choc_housing.png)
+![](doc/img/choc_stand.png)
+![](doc/img/choc_screen_cover.png)
+
 # Preview
 
 ## MX Spacing
