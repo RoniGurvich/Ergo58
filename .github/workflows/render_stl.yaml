@@ -24,7 +24,7 @@ jobs:
 
       - name: Extract files
         run: |
-          docker cp ergo58-container:/app/models ./generated_models
+          docker cp ergo58-container:/app/models ./generated_models && tar -zf ergo58.tar.gz -C ./generated_models
 
       - name: Upload files as artifact
         uses: actions/upload-artifact@v4
@@ -32,17 +32,12 @@ jobs:
           name: models
           path: generated_models/
 
-      - name: Set up GH_TOKEN
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo "GitHub CLI authenticated."
-
       - name: Create or update GitHub release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create latest ./generated_models --title "Latest Models" --notes "Automatically uploaded from CI" || \
-          gh release upload latest ./generated_models --clobber
+          gh release create latest ./ergo58.tar.gz --title "Latest Models" --notes "Automatically uploaded from CI" || \
+          gh release upload latest ./ergo58.tar.gz --clobber
 
       - name: Remove container
         run: |
