@@ -4,7 +4,9 @@ on:
   push:
     branches:
       - main
-      - test_ci
+  pull_request:
+    branches:
+      - '**'
 
 jobs:
   build:
@@ -33,6 +35,7 @@ jobs:
           path: generated_models/
 
       - name: Create or update GitHub release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
