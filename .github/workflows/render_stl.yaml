@@ -24,13 +24,13 @@ jobs:
 
       - name: Extract files
         run: |
-          docker cp ergo58-container:/app/models ./models
+          docker cp ergo58-container:/app/models ./generated_models
 
       - name: Upload files as artifact
         uses: actions/upload-artifact@v4
         with:
           name: models
-          path: models/
+          path: generated_models/
 
       - name: Remove container
         run: |
