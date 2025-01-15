@@ -2,6 +2,8 @@
 
 a 3D printable case for the Lily58 keyboard
 
+![](doc/img/printed_photo.jpg)
+
 # Printable Files
 
 You can find the files in [models directory](./models).
@@ -22,6 +24,3 @@ spacing variant from typeractive.xyz.
 [3D preview](./doc/3d/choc_assembly.stl)
 
 ![](doc/img/choc_assembly.png)
-
-## Printed Case
-![](doc/img/printed_photo.jpg)
