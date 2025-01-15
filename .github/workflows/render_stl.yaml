@@ -27,7 +27,7 @@ jobs:
           docker cp ergo58-container:/app/models ./models
 
       - name: Upload files as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: models
           path: models/
