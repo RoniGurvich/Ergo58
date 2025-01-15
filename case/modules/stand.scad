@@ -1,6 +1,6 @@
-include <profiles.scad>
+include <../2d_profiles/profiles.scad>
 include <housing.scad>
-include <meshes.scad>
+include <../math/meshes.scad>
 
 module base_volume(profile_points, outer_scale_margin, rotation, translation) {
     center_point = get_center_point(profile_points);

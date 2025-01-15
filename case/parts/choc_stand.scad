@@ -1,6 +1,6 @@
-include <../housing.scad>
-include <../stand.scad>
-include <../choc_profiles.scad>
+include <../modules/housing.scad>
+include <../modules/stand.scad>
+include <../2d_profiles/choc_profiles.scad>
 
 translate([0, -20, 0])
     rotate([0, 0, 190])

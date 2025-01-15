@@ -1,7 +1,7 @@
-include <../housing.scad>
-include <../stand.scad>
+include <../modules/housing.scad>
+include <../modules/stand.scad>
 include <../config.scad>
-include <../choc_profiles.scad>
+include <../2d_profiles/choc_profiles.scad>
 
 wrist_cushion_template(
 top_points = reverse(choc_wrist_support_top_points),

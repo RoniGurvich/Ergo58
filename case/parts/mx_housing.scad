@@ -1,5 +1,5 @@
-include <../housing.scad>
-include <../stand.scad>
+include <../modules/housing.scad>
+include <../modules/stand.scad>
 include <../config.scad>
 
 case(

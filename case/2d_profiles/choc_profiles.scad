@@ -1,4 +1,4 @@
-include <config.scad>
+include <../config.scad>
 include <profiles.scad>
 
 min_x = min([for (p = case_profile_points) p[0]]);

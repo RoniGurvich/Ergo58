@@ -1,6 +1,6 @@
-include <array_ops.scad>
-include <profiles.scad>
-include <config.scad>
+include <../math/array_ops.scad>
+include <../2d_profiles/profiles.scad>
+include <../config.scad>
 
 $fn = 50;
 

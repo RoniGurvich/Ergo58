@@ -1,5 +1,5 @@
-include <array_ops.scad>
-include <bezier.scad>
+include <../math/array_ops.scad>
+include <../math/bezier.scad>
 
 n_corner_points = 10;
 
