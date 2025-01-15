@@ -1,7 +1,7 @@
-include <housing.scad>
-include <stand.scad>
-include <config.scad>
-include <choc_profiles.scad>
+include <../modules/housing.scad>
+include <../modules/stand.scad>
+include <../config.scad>
+include <../2d_profiles/choc_profiles.scad>
 
 
 module left_case() {

@@ -1,6 +1,6 @@
-include <housing.scad>
-include <stand.scad>
-include <config.scad>
+include <../modules/housing.scad>
+include <../modules/stand.scad>
+include <../config.scad>
 
 module left_case() {
     color([0, 1, 1, 0.8])
