@@ -24,7 +24,7 @@ jobs:
 
       - name: Extract files
         run: |
-          docker cp ergo58-container:/app/models ./generated_models && tar -zf ergo58.tar.gz -C ./generated_models
+          docker cp ergo58-container:/app/models ./generated_models && cd models && tar czf ergo58.tar.gz *.stl && mv ergo58.tar.gz ../
 
       - name: Upload files as artifact
         uses: actions/upload-artifact@v4
