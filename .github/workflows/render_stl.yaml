@@ -1,0 +1,47 @@
+name: Create STLs
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t ergo58:latest .
+
+      - name: Run Docker container
+        run: |
+          docker create --name ergo58-container ergo58:latest
+
+      - name: Extract files
+        run: |
+          docker cp ergo58-container:/app/models ./generated_models && cd models && zip ergo58.zip *.stl && mv ergo58.zip ../
+
+      - name: Upload files as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: models
+          path: generated_models/
+
+      - name: Create or update GitHub release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create latest ./ergo58.zip --title "Latest Models" --notes "Automatically uploaded from CI" || \
+          gh release upload latest ./ergo58.zip --clobber
+
+      - name: Remove container
+        run: |
+          docker rm ergo58-container          
