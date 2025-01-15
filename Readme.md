@@ -22,3 +22,6 @@ spacing variant from typeractive.xyz.
 [3D preview](./doc/3d/choc_assembly.stl)
 
 ![](doc/img/choc_assembly.png)
+
+## Printed Case
+![](doc/img/printed_photo.jpg)
