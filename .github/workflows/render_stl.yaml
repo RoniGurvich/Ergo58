@@ -39,7 +39,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create latest ./ergo58.zip --title "Latest Models" --notes "Automatically uploaded from CI" || \
+          gh release create latest ./ergo58.zip --title "3D Models" --notes "Printable 3D models" || \
           gh release upload latest ./ergo58.zip --clobber
 
       - name: Remove container
