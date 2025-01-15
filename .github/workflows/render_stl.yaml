@@ -1,0 +1,37 @@
+name: Create STLs
+
+on:
+  push:
+    branches:
+      - main
+      - test_ci
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t ergo58:latest .
+
+      - name: Run Docker container
+        run: |
+          docker create --name ergo58-container ergo58:latest
+
+      - name: Extract files
+        run: |
+          docker cp ergo58-container:/app/models ./models
+
+      - name: Upload files as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: models
+          path: models/
+
+      - name: Remove container
+        run: |
+          docker rm ergo58-container          
