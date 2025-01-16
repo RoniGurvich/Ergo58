@@ -27,17 +27,9 @@ A third - optional printable part is the screen cover.
 
 # Preview
 
-## MX Spacing
-
 [3D preview](./doc/3d/mx_assembly.stl)
 
 ![](doc/img/mx_assembly.png)
-
-## Choc Spacing
-
-[3D preview](./doc/3d/choc_assembly.stl)
-
-![](doc/img/choc_assembly.png)
 
 # Customization
 
