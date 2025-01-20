@@ -37,3 +37,6 @@ You can adjust the angles and heights of the case by modifying `rotation` and `t
 in [src/config.scad](src/config.scad).
 
 The easiest way to do it is to fork this repo, update the configuration and download the resulting files.
+
+# Testing Specs
+The parts were printed using high speed PlA, with a 0.4 brass nozzle and 0.2mm layer size
