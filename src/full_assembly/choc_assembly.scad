@@ -5,13 +5,13 @@ include <../2d_profiles/choc_profiles.scad>
 
 
 module left_case() {
-    color([1, 1, 1, 1])
+    color(case_color)
         case(
         board_points = choc_board_profile_points,
         case_points = choc_case_profile_points
         );
 
-    color([0.3, 0.3, 0.3, 1])
+    color(cushion_color)
         wrist_cushion(
         top_points = reverse(choc_wrist_support_top_points),
         bottom_points = choc_wrist_support_bottom_points,
@@ -33,7 +33,7 @@ left_case_with_rotation(rotation = rotation, translation = translation);
 mirror([1, 0, 0])
     left_case_with_rotation(rotation = rotation, translation = translation);
 
-color([1, 1, 1, 1])
+color(base_color)
     {
         keyboard_base(
         profile_points = choc_case_profile_points,
