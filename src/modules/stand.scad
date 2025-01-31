@@ -1,18 +1,23 @@
+include <BOSL2/std.scad>
 include <../2d_profiles/profiles.scad>
 include <housing.scad>
-include <../math/meshes.scad>
+include <../math/projections.scad>
+
+module base_volume_bottom_surface(profile_points, outer_scale_margin, rotation, translation) {
+    center_point = get_center_point(profile_points);
+    projection(cut = false)
+        translate(translation)
+            rotate(rotation)
+                linear_extrude(height = 0.1)
+                    translate([center_point[0], center_point[1], 0])
+                        scale([1 + outer_scale_margin, 1 + outer_scale_margin, 1])
+                            translate([-center_point[0], -center_point[1], 0])
+                                polygon(profile_points);
+};
 
 module base_volume(profile_points, outer_scale_margin, rotation, translation) {
-    center_point = get_center_point(profile_points);
     linear_extrude(height = 120)
-        projection(cut = false)
-            translate(translation)
-                rotate(rotation)
-                    linear_extrude(height = 0.1)
-                        translate([center_point[0], center_point[1], 0])
-                            scale([1 + outer_scale_margin, 1 + outer_scale_margin, 1])
-                                translate([-center_point[0], -center_point[1], 0])
-                                    polygon(profile_points);
+        base_volume_bottom_surface(profile_points, outer_scale_margin, rotation, translation);
 };
 
 module legs(profile_points) {
@@ -64,6 +69,32 @@ module legs(profile_points) {
 
 };
 
+module stand_holes(translation, rotation, profile_points) {
+    box_size = 7;
+    thickness = 1 ;
+
+    diag_size = sqrt(2) * box_size;
+    difference() {
+        translate([0, 0, -diag_size / 2])
+            zcopies(n = 20, spacing = diag_size / 2 + thickness)
+            path_copies(
+            project_poly2(profile_points, translation, rotation),
+            spacing = diag_size + thickness, closed = true, sp = $idx % 2 *
+                diag_size / 2)
+            rotate([-90, 45, 0])
+                translate([0, 0, 10])
+                    cube([box_size, box_size, 30], center = true);
+
+                translate([0, 0, -50 + 2])
+                    cube([400, 400, 100], center = true);
+        //
+                translate(translation)
+                    rotate(rotation)
+                        translate([0, 0, 50])
+                            cube([400, 400, 100], center = true);
+    };
+};
+
 module keyboard_base(profile_points, outer_scale_margin, rotation, translation) {
     cube_height = 5;
 
@@ -77,52 +108,35 @@ module keyboard_base(profile_points, outer_scale_margin, rotation, translation) 
         );
     }
 
-    difference() {
-        base_volume(
-        profile_points = profile_points,
-        outer_scale_margin = outer_scale_margin + 0.02,
-        rotation = rotation,
-        translation = translation
-        );
-        translate([0, 0, -0.1])
-            base_volume(
-            profile_points = profile_points,
-            outer_scale_margin = outer_scale_margin - 0.03,
-            rotation = rotation,
-            translation = translation
-            );
+    intersection()
+        {
+            difference() {
+                base_volume(
+                profile_points = profile_points,
+                outer_scale_margin = outer_scale_margin + 0.02,
+                rotation = rotation,
+                translation = translation
+                );
+                translate([0, 0, -0.1])
+                    base_volume(
+                    profile_points = profile_points,
+                    outer_scale_margin = outer_scale_margin - 0.03,
+                    rotation = rotation,
+                    translation = translation
+                    );
 
-        translate(translation)
-            rotate(rotation)
-                translate([-500, -500, cube_height])
-                    cube([1000, 1000, 1000]);
+                translate(translation)
+                    rotate(rotation)
+                        {
+                            translate([-500, -500, cube_height])
+                                cube([1000, 1000, 1000]);
+                            flat_keyboard_body(profile_points, 100, outer_scale_margin);
+                            case_holes(rad_extra = 0.1);
+                        }
 
-        translate(translation)
-            rotate(rotation)
-                flat_keyboard_body(profile_points, 100, outer_scale_margin);
+                stand_holes(translation, rotation, profile_points);
+            };
 
-        translate(translation)
-            rotate(rotation)
-                case_holes(rad_extra = 0.1);
+        };
 
-        //        difference() {
-        //            translate([-90, 0, 0])
-        //                diamond_mesh(
-        //                reps = [20, 26, 4],
-        //                dim = 5,
-        //                scale = 4,
-        //                thickness = 0.1
-        //                );
-        //
-        //            translate(translation)
-        //                rotate(rotation)
-        //                    translate([-500, -500, cube_height - 5])
-        //                        cube([1000, 1000, 1000]);
-        //
-        //            translate([-500, -500, -999])
-        //                cube([1000, 1000, 1000]);
-        //        };
-    };
 };
-
-

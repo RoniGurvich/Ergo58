@@ -1,3 +1,5 @@
+include <BOSL2/std.scad>
+
 function reverse(arr) = [
     for (i = [1:len(arr)]) arr[len(arr) - i]
     ];
@@ -20,10 +22,10 @@ function scale2d_multi(arr, factors, centerpoint) = [
         ]
     ];
 
-function sum(v) = [for (p = v) 1] * v;
+function sum_arr(v) = [for (p = v) 1] * v;
 
 function get_center_point(points) =
     [
-        sum([for (p = points) p[0]]) / len(points),
-        sum([for (p = points) p[1]]) / len(points),
+        sum_arr([for (p = points) p[0]]) / len(points),
+        sum_arr([for (p = points) p[1]]) / len(points),
     ];

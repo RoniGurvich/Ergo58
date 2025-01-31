@@ -1,3 +1,6 @@
+include <BOSL2/std.scad>
+include <BOSL2/isosurface.scad>
+
 module diamond_mesh(reps, dim, scale, thickness) {
     spacing = dim * 2 + thickness;
 
@@ -27,3 +30,16 @@ module pyramid(dim) {
             [1, 0, 3], [2, 1, 3]]                         // two triangles for square base
     );
 }
+
+gyroid = function (xyz, wavelength) let(
+    p = 360 / wavelength,
+    px = p * xyz[0],
+    py = p * xyz[1],
+    pz = p * xyz[2]
+) sin(px) * cos(py) + sin(py) * cos(pz) + sin(pz) * cos(px);
+
+module gyroid3(voxel_size = 0.5, box_size = 10, isovalue = 0.03) {
+    bbox = [[-box_size, -box_size, -box_size], [box_size, box_size, box_size]];
+    isosurface(voxel_size = voxel_size, bounding_box = bbox, isovalue = [-isovalue, isovalue],
+    field_function = gyroid, additional = 20, close_clip = false);
+};
