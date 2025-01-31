@@ -71,7 +71,8 @@ module legs(profile_points) {
 
 module stand_holes(translation, rotation, profile_points) {
     box_size = 7;
-    thickness = 1 ;
+    thickness = 1;
+    margin = 5;
 
     diag_size = sqrt(2) * box_size;
     difference() {
@@ -85,13 +86,13 @@ module stand_holes(translation, rotation, profile_points) {
                 translate([0, 0, 10])
                     cube([box_size, box_size, 30], center = true);
 
-                translate([0, 0, -50 + 2])
+        translate([0, 0, -50 + margin])
+            cube([400, 400, 100], center = true);
+
+        translate(translation)
+            rotate(rotation)
+                translate([0, 0, 50 - margin])
                     cube([400, 400, 100], center = true);
-        //
-                translate(translation)
-                    rotate(rotation)
-                        translate([0, 0, 50])
-                            cube([400, 400, 100], center = true);
     };
 };
 
