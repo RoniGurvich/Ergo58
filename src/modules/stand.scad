@@ -131,8 +131,8 @@ module keyboard_base(profile_points, outer_scale_margin, rotation, translation, 
                 translate(translation)
                     rotate(rotation)
                         {
-                            translate([-500, -500, cube_height])
-                                cube([1000, 1000, 1000]);
+                            translate([-300, -300, cube_height])
+                                cube([600, 600, 300]);
                             flat_keyboard_body(profile_points, 100, outer_scale_margin);
                             case_holes(rad_extra = 0.1);
                         };
