@@ -8,5 +8,6 @@ translate([0, -20, 0])
         profile_points = choc_case_profile_points,
         outer_scale_margin = outer_scale_margin,
         rotation = rotation,
-        translation = translation
+        translation = translation,
+        with_holes = with_holes
         );

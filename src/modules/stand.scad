@@ -98,7 +98,7 @@ module stand_holes(translation, rotation, profile_points) {
     };
 };
 
-module keyboard_base(profile_points, outer_scale_margin, rotation, translation) {
+module keyboard_base(profile_points, outer_scale_margin, rotation, translation, with_holes = true) {
     cube_height = 5;
 
     intersection() {
@@ -135,9 +135,9 @@ module keyboard_base(profile_points, outer_scale_margin, rotation, translation) 
                                 cube([1000, 1000, 1000]);
                             flat_keyboard_body(profile_points, 100, outer_scale_margin);
                             case_holes(rad_extra = 0.1);
-                        }
+                        };
 
-                stand_holes(translation, rotation, profile_points);
+                if (with_holes) stand_holes(translation, rotation, profile_points);
             };
 
         };
