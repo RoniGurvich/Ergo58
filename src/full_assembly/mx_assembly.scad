@@ -37,7 +37,8 @@ color(base_color)
         profile_points = case_profile_points,
         outer_scale_margin = outer_scale_margin,
         rotation = rotation,
-        translation = translation
+        translation = translation,
+        with_holes = with_holes
         );
 
         mirror([1, 0, 0])
@@ -45,6 +46,7 @@ color(base_color)
             profile_points = case_profile_points,
             outer_scale_margin = outer_scale_margin,
             rotation = rotation,
-            translation = translation
+            translation = translation,
+            with_holes = with_holes
             );
     }
