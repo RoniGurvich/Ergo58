@@ -78,11 +78,10 @@ module stand_holes(translation, rotation, profile_points) {
     diag_size = sqrt(2) * box_size;
     difference() {
         translate([0, 0, -diag_size / 2])
-            zcopies(l = 150, spacing = z_scale * diag_size / 2 + thickness)
+            zcopies(l = 150, spacing = z_scale * (diag_size + thickness) / 2)
             path_copies(
             project_poly2(profile_points, translation, rotation),
-            spacing = diag_size + thickness, closed = true, sp = $idx % 2 *
-                diag_size / 2)
+            spacing = diag_size + thickness, closed = true, sp = $idx % 2 * (diag_size + thickness) / 2)
             scale([1, 1, z_scale])
                 rotate([-90, 45, 0])
                     translate([0, 0, 10])
