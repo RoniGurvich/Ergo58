@@ -70,7 +70,7 @@ module legs(profile_points) {
 };
 
 module stand_holes(translation, rotation, profile_points) {
-    box_size = 3;
+    box_size = 3.22;
     thickness = 1;
     margin = 5;
     z_scale = 1;
