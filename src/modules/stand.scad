@@ -69,12 +69,15 @@ module legs(profile_points) {
 
 };
 
-module stand_holes(translation, rotation, profile_points) {
-    box_size = 3.22;
-    thickness = 1;
-    margin = 5;
-    z_scale = 1;
-
+module stand_holes(
+translation,
+rotation,
+profile_points,
+box_size,
+thickness,
+margin,
+z_scale
+) {
     diag_size = sqrt(2) * box_size;
     difference() {
         translate([0, 0, -diag_size / 2])
@@ -97,7 +100,17 @@ module stand_holes(translation, rotation, profile_points) {
     };
 };
 
-module keyboard_base(profile_points, outer_scale_margin, rotation, translation, with_holes = true) {
+module keyboard_stand(
+profile_points,
+outer_scale_margin,
+rotation,
+translation,
+with_holes = true,
+stand_holes_box_size = 4,
+stand_holes_thickness = 2,
+stand_holes_margin = 5,
+stand_holes_z_scale = 1
+) {
     cube_height = 5;
 
     intersection() {
@@ -136,7 +149,15 @@ module keyboard_base(profile_points, outer_scale_margin, rotation, translation, 
                             case_holes(rad_extra = 0.1);
                         };
 
-                if (with_holes) stand_holes(translation, rotation, profile_points);
+                if (with_holes) stand_holes(
+                translation=translation,
+                rotation=rotation,
+                profile_points=profile_points,
+                box_size = stand_holes_box_size,
+                thickness = stand_holes_thickness,
+                margin = stand_holes_margin,
+                z_scale = stand_holes_z_scale
+                );
             };
 
         };

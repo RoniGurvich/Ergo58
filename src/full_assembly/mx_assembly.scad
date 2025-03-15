@@ -33,7 +33,7 @@ mirror([1, 0, 0])
 
 color(base_color)
     {
-        keyboard_base(
+        keyboard_stand(
         profile_points = case_profile_points,
         outer_scale_margin = outer_scale_margin,
         rotation = rotation,
@@ -42,7 +42,7 @@ color(base_color)
         );
 
         mirror([1, 0, 0])
-            keyboard_base(
+            keyboard_stand(
             profile_points = case_profile_points,
             outer_scale_margin = outer_scale_margin,
             rotation = rotation,
