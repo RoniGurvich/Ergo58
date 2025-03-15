@@ -105,11 +105,11 @@ profile_points,
 outer_scale_margin,
 rotation,
 translation,
-with_holes = true,
-stand_holes_box_size = 4,
-stand_holes_thickness = 2,
-stand_holes_margin = 5,
-stand_holes_z_scale = 1
+with_holes,
+stand_holes_box_size,
+stand_holes_thickness,
+stand_holes_margin,
+stand_holes_z_scale
 ) {
     cube_height = 5;
 

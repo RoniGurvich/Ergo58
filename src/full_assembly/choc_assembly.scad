@@ -40,7 +40,11 @@ color(base_color)
         outer_scale_margin = outer_scale_margin,
         rotation = rotation,
         translation = translation,
-        with_holes = with_holes
+        with_holes = with_holes,
+        stand_holes_box_size = stand_holes_box_size,
+        stand_holes_thickness = stand_holes_thickness,
+        stand_holes_margin = stand_holes_margin,
+        stand_holes_z_scale = stand_holes_z_scale
         );
 
         mirror([1, 0, 0])
@@ -49,6 +53,10 @@ color(base_color)
             outer_scale_margin = outer_scale_margin,
             rotation = rotation,
             translation = translation,
-            with_holes = with_holes
+            with_holes = with_holes,
+            stand_holes_box_size = stand_holes_box_size,
+            stand_holes_thickness = stand_holes_thickness,
+            stand_holes_margin = stand_holes_margin,
+            stand_holes_z_scale = stand_holes_z_scale
             );
     }
