@@ -7,7 +7,7 @@ include <../2d_profiles/choc_profiles.scad>
 // Cut Holes
 with_holes = true;
 // Stand holes dim
-stand_holes_box_size = 4; // [1:15]
+stand_holes_box_size = 4.5; // [1:15]
 // Holes wall thickness
 stand_holes_thickness = 2; // [1:5]
 // Top and bottom margin without holes

@@ -11,7 +11,7 @@ translate([0, -20, 0])
         rotation = rotation,
         translation = translation,
         with_holes = with_holes,
-        stand_holes_box_size = stand_holes_box_size,
+        stand_holes_box_size = 4.5,
         stand_holes_thickness = stand_holes_thickness,
         stand_holes_margin = stand_holes_margin,
         stand_holes_z_scale = stand_holes_z_scale
