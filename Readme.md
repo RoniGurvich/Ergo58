@@ -2,6 +2,8 @@
 
 a 3D printable case for the Lily58 keyboard
 
+![](doc/img/printed_photo2.jpg)
+![](doc/img/printed_photo1.jpg)
 ![](doc/img/printed_photo.jpg)
 
 # Printable Files
