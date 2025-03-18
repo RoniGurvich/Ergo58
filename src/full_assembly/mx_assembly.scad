@@ -2,6 +2,22 @@ include <../modules/housing.scad>
 include <../modules/stand.scad>
 include <../config.scad>
 
+/* [Stand holes properties] */
+// Cut Holes
+with_holes = true;
+// Stand holes dim
+stand_holes_box_size = 4; // [1:15]
+// Holes wall thickness
+stand_holes_thickness = 2; // [1:5]
+// Top and bottom margin without holes
+stand_holes_margin = 5; // [1:15]
+// Diamond shape scaling
+stand_holes_z_scale = 1; // [1:4]
+
+/* [Orientation and Angles] */
+rotation = [10, 10, 170];
+translation = [-160, 0, 20];
+
 module left_case() {
     color(case_color)
         case(
@@ -33,20 +49,28 @@ mirror([1, 0, 0])
 
 color(base_color)
     {
-        keyboard_base(
+        keyboard_stand(
         profile_points = case_profile_points,
         outer_scale_margin = outer_scale_margin,
         rotation = rotation,
         translation = translation,
-        with_holes = with_holes
+        with_holes = with_holes,
+        stand_holes_box_size = stand_holes_box_size,
+        stand_holes_thickness = stand_holes_thickness,
+        stand_holes_margin = stand_holes_margin,
+        stand_holes_z_scale = stand_holes_z_scale
         );
 
         mirror([1, 0, 0])
-            keyboard_base(
+            keyboard_stand(
             profile_points = case_profile_points,
             outer_scale_margin = outer_scale_margin,
             rotation = rotation,
             translation = translation,
-            with_holes = with_holes
+            with_holes = with_holes,
+            stand_holes_box_size = stand_holes_box_size,
+            stand_holes_thickness = stand_holes_thickness,
+            stand_holes_margin = stand_holes_margin,
+            stand_holes_z_scale = stand_holes_z_scale
             );
     }
