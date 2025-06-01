@@ -11,14 +11,14 @@ module board_with_thickenss(points) {
 
 module keyboard_space(
 profile_points,
-bottom_thickenss,
+bottom_thickness,
 case_height,
 scale_margin,
 eps = 0.01
 ) {
     center_point = get_center_point(profile_points);
-    translate([0, 0, bottom_thickenss])
-        linear_extrude(height = case_height - bottom_thickenss + eps)
+    translate([0, 0, bottom_thickness])
+        linear_extrude(height = case_height - bottom_thickness + eps)
             translate([center_point[0], center_point[1], 0])
                 scale([1 + scale_margin, 1 + scale_margin, 1])
                     translate([-center_point[0], -center_point[1], 0])
@@ -98,9 +98,31 @@ module case_holes(rad_extra = 0) {
             );
 };
 
+module battery_hole(case_points, bottom_thickness, battery_diam = 21, battery_length = 70, handle_size = 4) {
+    min_profile_x = min_x(case_points);
+    min_profile_y = min_y(case_points);
+    translate(
+        [
+            min_profile_x + battery_length / 2,
+                min_profile_y + battery_diam / 2 + 15,
+        0]
+    )
+        rotate([0, 90, 0]) {
+            cube([20, battery_diam * 2 / 3, battery_length], center = true);
+            translate([-bottom_thickness, 0, 0])
+                cube([bottom_thickness, battery_diam * 2 / 3 + handle_size * 2, battery_length], center = true);
+        }
+};
+
 module case(board_points, case_points) {
     case_height = 10;
-    bottom_thickenss = 1;
+    bottom_thickness = 1;
+
+    battery_diam = 21;
+    battery_length = 70;
+    handle_size = 4;
+
+
     difference() {
         keyboard_body(
         profile_points = case_points,
@@ -109,11 +131,18 @@ module case(board_points, case_points) {
         );
         keyboard_space(
         profile_points = board_points,
-        bottom_thickenss = bottom_thickenss,
+        bottom_thickness = bottom_thickness,
         case_height = case_height,
         scale_margin = keyboard_hole_scale_margin
         );
         case_holes();
+        battery_hole(
+        case_points = case_points,
+        bottom_thickness = bottom_thickness,
+        battery_diam = battery_diam,
+        battery_length = battery_length,
+        handle_size = handle_size
+        );
     };
 
 };
