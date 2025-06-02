@@ -1,7 +1,7 @@
 include <../math/array_ops.scad>
 include <../math/bezier.scad>
 
-n_corner_points = 10;
+n_corner_points = 50;
 
 board_profile_points = concat(
     [[-119.504642, 22.529083], [-106.09824, 14.768994],

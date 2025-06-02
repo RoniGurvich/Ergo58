@@ -98,30 +98,30 @@ module case_holes(rad_extra = 0) {
             );
 };
 
-module battery_hole(case_points, bottom_thickness, battery_diam = 21, battery_length = 70, handle_size = 4) {
+module battery_hole(
+case_points, bottom_thickness,
+battery_diam = 21, battery_length = 70, handle_size = 4, external_cutout_offset = 15,
+opening_size_ratio = 2 / 3
+) {
     min_profile_x = min_x(case_points);
     min_profile_y = min_y(case_points);
+    opening_size = battery_diam * opening_size_ratio;
+
     translate(
         [
             min_profile_x + battery_length / 2,
-                min_profile_y + battery_diam / 2 + 15,
+                min_profile_y + battery_diam / 2 + external_cutout_offset,
         0]
     )
         rotate([0, 90, 0]) {
-            cube([20, battery_diam * 2 / 3, battery_length], center = true);
+            cube([20, opening_size, battery_length], center = true);
             translate([-bottom_thickness, 0, 0])
-                cube([bottom_thickness, battery_diam * 2 / 3 + handle_size * 2, battery_length], center = true);
+                cube([bottom_thickness, opening_size + handle_size * 2, battery_length], center = true);
         }
 };
 
-module case(board_points, case_points) {
+module case(board_points, case_points, battery_diam, battery_handle_size, battery_opening_size_ratio, bottom_thickness = 1, battery_length = 70) {
     case_height = 10;
-    bottom_thickness = 1;
-
-    battery_diam = 21;
-    battery_length = 70;
-    handle_size = 4;
-
 
     difference() {
         keyboard_body(
@@ -141,10 +141,29 @@ module case(board_points, case_points) {
         bottom_thickness = bottom_thickness,
         battery_diam = battery_diam,
         battery_length = battery_length,
-        handle_size = handle_size
+        handle_size = battery_handle_size,
+        opening_size_ratio = battery_opening_size_ratio
         );
     };
 
+};
+
+module battery_holder(
+battery_diam, housing_bottom_thickness, opening_size_ratio,
+handle_size,
+holder_thickness = 2
+) {
+    $fn = 150;
+    opening_size = battery_diam * opening_size_ratio;
+    battery_holder_height = opening_size;
+    difference() {
+        cylinder(h = battery_holder_height, d = battery_diam + holder_thickness, center = true);
+        translate([0, 0, holder_thickness])
+            cylinder(h = battery_holder_height, d = battery_diam, center = true);
+    };
+    translate([-battery_diam / 2 - holder_thickness / 2, 0, 0])
+        cube([housing_bottom_thickness / 2, opening_size + handle_size * 2, battery_holder_height],
+        center = true);
 };
 
 module wrist_cushion(
