@@ -100,7 +100,7 @@ module case_holes(rad_extra = 0) {
 
 module battery_hole(
 case_points, bottom_thickness,
-battery_diam = 21, battery_length = 70, handle_size = 4, external_cutout_offset = 15,
+battery_diam = 21, battery_length = 75, handle_size = 4, external_cutout_offset = 15,
 opening_size_ratio = 2 / 3
 ) {
     min_profile_x = min_x(case_points);
@@ -120,7 +120,10 @@ opening_size_ratio = 2 / 3
         }
 };
 
-module case(board_points, case_points, battery_diam, battery_handle_size, battery_opening_size_ratio, bottom_thickness = 1, battery_length = 70) {
+module case(
+board_points, case_points,
+battery_diam, battery_handle_size, battery_opening_size_ratio, bottom_thickness = 1, battery_length = 75
+) {
     case_height = 10;
 
     difference() {
