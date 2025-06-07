@@ -100,26 +100,45 @@ module case_holes(rad_extra = 0) {
 
 module battery_hole(
 case_points, bottom_thickness,
-battery_diam = 21, battery_length = 75, handle_size = 4, external_cutout_offset = 8,
-opening_size_ratio = 2 / 3
+battery_diam = 21, battery_length = 75, handle_size = 4,
+external_cutout_offset = 20, opening_size_ratio = 2 / 3
 ) {
     min_profile_x = min_x(case_points);
     min_profile_y = min_y(case_points);
     opening_size = battery_diam * opening_size_ratio;
+    margin = 5;
 
     translate(
         [
-            min_profile_x + battery_length / 2,
-                min_profile_y + battery_length / 2 + external_cutout_offset,
+            min_profile_x + opening_size / 2,
+                min_profile_y + opening_size / 2 + external_cutout_offset,
         0]
     )
         rotate([0, 90, 90]) {
-            cube([20, opening_size, battery_length], center = true);
-            translate([0, battery_length / 2 - opening_size / 2, - battery_length / 4])
-                cube([20, opening_size, battery_length / 2], center = true);
+            cube([20, opening_size, opening_size], center = true);
+        };
+    translate(
+        [
+                    min_profile_x + opening_size / 2 + opening_size + margin,
+                min_profile_y + opening_size / 2 + margin,
+        0]
+    )
+        rotate([0, 90, 90]) {
+            cube([20, opening_size, opening_size], center = true);
             translate([-bottom_thickness, 0, 0])
-                cube([bottom_thickness, opening_size + handle_size * 2, battery_length], center = true);
-        }
+                cube([bottom_thickness, opening_size + handle_size * 2, opening_size], center = true);
+        };
+    translate(
+        [
+                    min_profile_x + opening_size / 2 + opening_size + margin,
+                        min_profile_y + opening_size / 2 + battery_length - opening_size + margin,
+        0]
+    )
+        rotate([0, 90, 90]) {
+            cube([20, opening_size, opening_size], center = true);
+            translate([-bottom_thickness, 0, 0])
+                cube([bottom_thickness, opening_size + handle_size * 2, opening_size], center = true);
+        };
 };
 
 module case(
