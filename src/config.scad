@@ -8,6 +8,7 @@ battery_diam = 21; // diameter of the battery
 battery_handle_size = 10; // size of the handle of the battery holder
 battery_opening_size_ratio = 2 / 3; // ratio of the opening size to the battery diameter
 bottom_thickness = 1; // thickness of the bottom of the case
+battery_bolt_diam = 2; // diameter of the bolts for the battery holder
 
 // Stand holes properties
 with_holes = true;

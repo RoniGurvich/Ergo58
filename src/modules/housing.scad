@@ -98,10 +98,10 @@ module case_holes(rad_extra = 0) {
             );
 };
 
-module battery_hole(
+module battery_holes(
 case_points, bottom_thickness,
 battery_diam = 21, battery_length = 75, handle_size = 4,
-external_cutout_offset = 20, opening_size_ratio = 2 / 3
+external_cutout_offset = 20, opening_size_ratio = 2 / 3, bolt_diam = 2
 ) {
     min_profile_x = min_x(case_points);
     min_profile_y = min_y(case_points);
@@ -120,31 +120,38 @@ external_cutout_offset = 20, opening_size_ratio = 2 / 3
 
     translate(
         [
-                    min_profile_x + opening_size / 2 + opening_size + margin,
+                    min_profile_x + 2 * opening_size + margin + handle_size / 2,
                 min_profile_y + opening_size / 2 + margin,
         0]
     )
-        rotate([0, 90, 90]) {
-            cube([20, opening_size, opening_size], center = true);
-            translate([-bottom_thickness, 0, 0])
-                cube([bottom_thickness, opening_size + handle_size * 2, opening_size], center = true);
-        };
+        cylinder(d = bolt_diam, h = bottom_thickness * 5, center = true);
     translate(
         [
-                    min_profile_x + opening_size / 2 + opening_size + margin,
+                    min_profile_x + opening_size + margin - handle_size / 2,
+                min_profile_y + opening_size / 2 + margin,
+        0]
+    )
+        cylinder(d = bolt_diam, h = bottom_thickness * 5, center = true);
+    translate(
+        [
+                    min_profile_x + 2 * opening_size + margin + handle_size / 2,
                         min_profile_y + opening_size / 2 + battery_length - opening_size + margin,
         0]
     )
-        rotate([0, 90, 90]) {
-            cube([20, opening_size, opening_size], center = true);
-            translate([-bottom_thickness, 0, 0])
-                cube([bottom_thickness, opening_size + handle_size * 2, opening_size], center = true);
-        };
+        cylinder(d = bolt_diam, h = bottom_thickness * 5, center = true);
+    translate(
+        [
+                    min_profile_x + opening_size + margin - handle_size / 2,
+                        min_profile_y + opening_size / 2 + battery_length - opening_size + margin,
+        0]
+    )
+        cylinder(d = bolt_diam, h = bottom_thickness * 5, center = true);
 };
 
 module case(
 board_points, case_points,
-battery_diam, battery_handle_size, battery_opening_size_ratio, bottom_thickness = 1, battery_length = 75
+battery_diam, battery_handle_size, battery_opening_size_ratio,
+bottom_thickness = 1, battery_length = 75, bolt_diam = 2,
 ) {
     case_height = 10;
 
@@ -161,13 +168,14 @@ battery_diam, battery_handle_size, battery_opening_size_ratio, bottom_thickness 
         scale_margin = keyboard_hole_scale_margin
         );
         case_holes();
-        battery_hole(
+        battery_holes(
         case_points = case_points,
         bottom_thickness = bottom_thickness,
         battery_diam = battery_diam,
         battery_length = battery_length,
         handle_size = battery_handle_size,
-        opening_size_ratio = battery_opening_size_ratio
+        opening_size_ratio = battery_opening_size_ratio,
+        bolt_diam = bolt_diam
         );
     };
 
