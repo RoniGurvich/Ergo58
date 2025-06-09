@@ -2,7 +2,7 @@ include <../math/array_ops.scad>
 include <../2d_profiles/profiles.scad>
 include <../config.scad>
 
-$fn = 50;
+$fn = 200;
 
 module board_with_thickenss(points) {
     linear_extrude(height = 2)
@@ -53,7 +53,7 @@ module keyboard_body(profile_points, case_height, scale_margin) {
         translate([min_x, max_y - cylinder_rad / 2, case_height - cylinder_rad])
             rotate([0, 90, 0])
                 {
-                    cylinder(200, cylinder_rad, cylinder_rad, $fn = 100);
+                    cylinder(200, cylinder_rad, cylinder_rad, $fn = 500);
                     translate([-cylinder_rad, -cylinder_rad, 0])
                         cube([cylinder_rad, cylinder_rad, 200]);
                 }
@@ -117,6 +117,7 @@ external_cutout_offset = 20, opening_size_ratio = 2 / 3
         rotate([0, 90, 90]) {
             cube([20, opening_size, opening_size], center = true);
         };
+
     translate(
         [
                     min_profile_x + opening_size / 2 + opening_size + margin,
@@ -175,9 +176,9 @@ battery_diam, battery_handle_size, battery_opening_size_ratio, bottom_thickness 
 module battery_holder(
 battery_diam, housing_bottom_thickness, opening_size_ratio,
 handle_size,
-holder_thickness = 2
+holder_thickness = 2,
+bolt_diam = 2,
 ) {
-    $fn = 150;
     opening_size = battery_diam * opening_size_ratio;
     battery_holder_height = opening_size;
     difference() {
@@ -186,8 +187,26 @@ holder_thickness = 2
             cylinder(h = battery_holder_height, d = battery_diam, center = true);
     };
     translate([-battery_diam / 2 - holder_thickness / 2, 0, 0])
-        cube([housing_bottom_thickness / 2, opening_size + handle_size * 2, battery_holder_height],
-        center = true);
+        difference() {
+            cube(
+                [housing_bottom_thickness / 2, opening_size + handle_size * 2, battery_holder_height],
+            center = true
+            );
+            bolt_slot(opening_size, handle_size, battery_holder_height, housing_bottom_thickness, bolt_diam);
+            mirror([0, 1, 0])
+                bolt_slot(opening_size, handle_size, battery_holder_height, housing_bottom_thickness, bolt_diam);
+        };
+};
+
+module bolt_slot(opening_size, handle_size, battery_holder_height, housing_bottom_thickness, bolt_diam) {
+    hull() {
+        translate([0, (opening_size + handle_size) / 2, battery_holder_height / 4])
+            rotate([0, 90, 0])
+                cylinder(d = bolt_diam, h = housing_bottom_thickness * 2, center = true);
+        translate([0, (opening_size + handle_size) / 2, -battery_holder_height / 4])
+            rotate([0, 90, 0])
+                cylinder(d = bolt_diam, h = housing_bottom_thickness * 2, center = true);
+    }
 };
 
 module wrist_cushion(
