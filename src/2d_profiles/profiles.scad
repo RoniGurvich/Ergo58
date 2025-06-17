@@ -94,3 +94,11 @@ case_profile_points = concat(
 board_top_points,
 wrist_support_bottom_points
 );
+
+keyboard_bolt_holes_coords = [
+        [-120.1182161, -7.210170233],
+        [-95.50964314, -62.31191429],
+        [-95.50964314, -24.37939923],
+        [-19.28277799, -60.11607431],
+        [-19.28277799, -21.98362529]
+    ];

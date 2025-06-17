@@ -151,6 +151,7 @@ external_cutout_offset = 20, opening_size_ratio = 2 / 3, bolt_diam = 2
 module case(
 board_points, case_points,
 battery_diam, battery_handle_size, battery_opening_size_ratio,
+keyboard_bolt_holes_coords,
 bottom_thickness = 1, battery_length = 75, bolt_diam = 2,
 ) {
     case_height = 10;
@@ -177,8 +178,20 @@ bottom_thickness = 1, battery_length = 75, bolt_diam = 2,
         opening_size_ratio = battery_opening_size_ratio,
         bolt_diam = bolt_diam
         );
+        keyboard_bolt_holes(
+        keyboard_bolt_holes_coords = keyboard_bolt_holes_coords,
+        diameter = bolt_diam,
+        bottom_thickness = bottom_thickness
+        );
     };
 
+};
+
+module keyboard_bolt_holes(keyboard_bolt_holes_coords, diameter, bottom_thickness) {
+    for (coord = keyboard_bolt_holes_coords) {
+        translate([coord[0], coord[1], bottom_thickness / 2])
+            cylinder(d = diameter, h = bottom_thickness * 2, center = true);
+    }
 };
 
 module battery_holder(
