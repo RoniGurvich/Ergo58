@@ -29,3 +29,15 @@ function get_center_point(points) =
         sum_arr([for (p = points) p[0]]) / len(points),
         sum_arr([for (p = points) p[1]]) / len(points),
     ];
+
+function max_x(points) =
+    max([for (p = points) p[0]]);
+
+function min_x(points) =
+    min([for (p = points) p[0]]);
+
+function max_y(points) =
+    max([for (p = points) p[1]]);
+
+function min_y(points) =
+    min([for (p = points) p[1]]);

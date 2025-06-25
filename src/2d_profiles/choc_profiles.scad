@@ -19,3 +19,7 @@ wrist_support_top_points, choc_scale, [min_x, min_y]
 choc_wrist_support_bottom_points = scale2d_multi(
 wrist_support_bottom_points, choc_scale, [min_x, min_y]
 );
+
+choc_keyboard_bolt_holes_coords = scale2d_multi(
+keyboard_bolt_holes_coords, choc_scale, [min_x, min_y]
+);

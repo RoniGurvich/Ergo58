@@ -2,7 +2,7 @@ include <../math/array_ops.scad>
 include <../2d_profiles/profiles.scad>
 include <../config.scad>
 
-$fn = 50;
+$fn = 200;
 
 module board_with_thickenss(points) {
     linear_extrude(height = 2)
@@ -11,14 +11,14 @@ module board_with_thickenss(points) {
 
 module keyboard_space(
 profile_points,
-bottom_thickenss,
+bottom_thickness,
 case_height,
 scale_margin,
 eps = 0.01
 ) {
     center_point = get_center_point(profile_points);
-    translate([0, 0, bottom_thickenss])
-        linear_extrude(height = case_height - bottom_thickenss + eps)
+    translate([0, 0, bottom_thickness])
+        linear_extrude(height = case_height - bottom_thickness + eps)
             translate([center_point[0], center_point[1], 0])
                 scale([1 + scale_margin, 1 + scale_margin, 1])
                     translate([-center_point[0], -center_point[1], 0])
@@ -53,7 +53,7 @@ module keyboard_body(profile_points, case_height, scale_margin) {
         translate([min_x, max_y - cylinder_rad / 2, case_height - cylinder_rad])
             rotate([0, 90, 0])
                 {
-                    cylinder(200, cylinder_rad, cylinder_rad, $fn = 100);
+                    cylinder(200, cylinder_rad, cylinder_rad, $fn = 500);
                     translate([-cylinder_rad, -cylinder_rad, 0])
                         cube([cylinder_rad, cylinder_rad, 200]);
                 }
@@ -98,9 +98,64 @@ module case_holes(rad_extra = 0) {
             );
 };
 
-module case(board_points, case_points) {
+module battery_holes(
+case_points, bottom_thickness,
+battery_diam = 21, battery_length = 75, handle_size = 4,
+external_cutout_offset = 20, opening_size_ratio = 2 / 3, bolt_diam = 2
+) {
+    min_profile_x = min_x(case_points);
+    min_profile_y = min_y(case_points);
+    opening_size = battery_diam * opening_size_ratio;
+    margin = 5;
+
+    translate(
+        [
+            min_profile_x + opening_size / 2,
+                min_profile_y + opening_size / 2 + external_cutout_offset,
+        0]
+    )
+        rotate([0, 90, 90]) {
+            cube([20, opening_size, opening_size], center = true);
+        };
+
+    translate(
+        [
+                    min_profile_x + 2 * opening_size + margin + handle_size / 2,
+                min_profile_y + opening_size / 2 + margin,
+        0]
+    )
+        cylinder(d = bolt_diam, h = bottom_thickness * 5, center = true);
+    translate(
+        [
+                    min_profile_x + opening_size + margin - handle_size / 2,
+                min_profile_y + opening_size / 2 + margin,
+        0]
+    )
+        cylinder(d = bolt_diam, h = bottom_thickness * 5, center = true);
+    translate(
+        [
+                    min_profile_x + 2 * opening_size + margin + handle_size / 2,
+                        min_profile_y + opening_size / 2 + battery_length - opening_size + margin,
+        0]
+    )
+        cylinder(d = bolt_diam, h = bottom_thickness * 5, center = true);
+    translate(
+        [
+                    min_profile_x + opening_size + margin - handle_size / 2,
+                        min_profile_y + opening_size / 2 + battery_length - opening_size + margin,
+        0]
+    )
+        cylinder(d = bolt_diam, h = bottom_thickness * 5, center = true);
+};
+
+module case(
+board_points, case_points,
+battery_diam, battery_handle_size, battery_opening_size_ratio,
+keyboard_bolt_holes_coords,
+bottom_thickness = 1, battery_length = 75, bolt_diam = 2,
+) {
     case_height = 10;
-    bottom_thickenss = 1;
+
     difference() {
         keyboard_body(
         profile_points = case_points,
@@ -109,13 +164,70 @@ module case(board_points, case_points) {
         );
         keyboard_space(
         profile_points = board_points,
-        bottom_thickenss = bottom_thickenss,
+        bottom_thickness = bottom_thickness,
         case_height = case_height,
         scale_margin = keyboard_hole_scale_margin
         );
         case_holes();
+        battery_holes(
+        case_points = case_points,
+        bottom_thickness = bottom_thickness,
+        battery_diam = battery_diam,
+        battery_length = battery_length,
+        handle_size = battery_handle_size,
+        opening_size_ratio = battery_opening_size_ratio,
+        bolt_diam = bolt_diam
+        );
+        keyboard_bolt_holes(
+        keyboard_bolt_holes_coords = keyboard_bolt_holes_coords,
+        diameter = bolt_diam,
+        bottom_thickness = bottom_thickness
+        );
     };
 
+};
+
+module keyboard_bolt_holes(keyboard_bolt_holes_coords, diameter, bottom_thickness) {
+    for (coord = keyboard_bolt_holes_coords) {
+        translate([coord[0], coord[1], bottom_thickness / 2])
+            cylinder(d = diameter, h = bottom_thickness * 2, center = true);
+    }
+};
+
+module battery_holder(
+battery_diam, housing_bottom_thickness, opening_size_ratio,
+handle_size,
+holder_thickness = 2,
+bolt_diam = 2,
+) {
+    opening_size = battery_diam * opening_size_ratio;
+    battery_holder_height = opening_size;
+    difference() {
+        cylinder(h = battery_holder_height, d = battery_diam + holder_thickness, center = true);
+        translate([0, 0, holder_thickness])
+            cylinder(h = battery_holder_height, d = battery_diam, center = true);
+    };
+    translate([-battery_diam / 2 - holder_thickness / 2, 0, 0])
+        difference() {
+            cube(
+                [housing_bottom_thickness / 2, opening_size + handle_size * 2, battery_holder_height],
+            center = true
+            );
+            bolt_slot(opening_size, handle_size, battery_holder_height, housing_bottom_thickness, bolt_diam);
+            mirror([0, 1, 0])
+                bolt_slot(opening_size, handle_size, battery_holder_height, housing_bottom_thickness, bolt_diam);
+        };
+};
+
+module bolt_slot(opening_size, handle_size, battery_holder_height, housing_bottom_thickness, bolt_diam) {
+    hull() {
+        translate([0, (opening_size + handle_size) / 2, battery_holder_height / 4])
+            rotate([0, 90, 0])
+                cylinder(d = bolt_diam, h = housing_bottom_thickness * 2, center = true);
+        translate([0, (opening_size + handle_size) / 2, -battery_holder_height / 4])
+            rotate([0, 90, 0])
+                cylinder(d = bolt_diam, h = housing_bottom_thickness * 2, center = true);
+    }
 };
 
 module wrist_cushion(

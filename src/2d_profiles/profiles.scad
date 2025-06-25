@@ -1,7 +1,7 @@
 include <../math/array_ops.scad>
 include <../math/bezier.scad>
 
-n_corner_points = 10;
+n_corner_points = 50;
 
 board_profile_points = concat(
     [[-119.504642, 22.529083], [-106.09824, 14.768994],
@@ -94,3 +94,11 @@ case_profile_points = concat(
 board_top_points,
 wrist_support_bottom_points
 );
+
+keyboard_bolt_holes_coords = [
+        [-120.1182161, -7.210170233],
+        [-95.50964314, -62.31191429],
+        [-95.50964314, -24.37939923],
+        [-19.28277799, -60.11607431],
+        [-19.28277799, -21.98362529]
+    ];
